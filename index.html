@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-
-    </head>
-    <title>Registro de visitas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Visitas</title>
     <style>
-          body {
+        body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f0f2f5;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -96,6 +95,7 @@
             width: 100%;
             max-width: 800px;
             margin: 20px auto;
+            overflow-x: auto;
         }
 
         th, td {
@@ -122,7 +122,7 @@
             cursor: pointer;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             h2 {
                 font-size: 1.5rem;
             }
@@ -140,10 +140,39 @@
             th, td {
                 padding: 8px 12px;
             }
-        }
-        
-    </style>
 
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 15px;
+            }
+
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-left: 10px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 <body>
 
   <h2>Registro de Visitas</h2>
@@ -153,12 +182,12 @@
       <thead>
           <tr>
               <th>#id</th>
-                <th><i class="fa-regular fa-user"></i>nome</th>
-                <th><i class="fa-solid fa-flask"></i>algicida /ml</th>
-                <th><i class="fa-solid fa-flask"></i>barrilha /g</th>
-                <th><i class="fa-solid fa-flask"></i>clarificante /ml</th>
-                <th><i class="fa-solid fa-flask"></i>cloro /g</th>
-                <th><i class="fa-solid fa-calendar-days"></i>data</th>
+              <th><i class="fa-regular fa-user"></i> Nome</th>
+              <th><i class="fas fa-flask"></i> Algicida /ml</th>
+              <th><i class="fas fa-flask"></i> Barrilha /g</th>
+              <th><i class="fas fa-flask"></i> Clarificante /ml</th>
+              <th><i class="fas fa-flask"></i> Cloro /g</th>
+              <th><i class="fa-solid fa-calendar-days"></i> Data</th>
           </tr>
       </thead>
       <tbody id="dados-lista"></tbody>
@@ -172,8 +201,15 @@
     };
 
     async function fetchDados() {
+      const nome = document.getElementById('nome-input').value.toLowerCase();
+
+      // Verificar se o campo nome está vazio
+      if (!nome) {
+        document.getElementById('dados-lista').innerHTML = "<tr><td colspan='7'>Por favor, digite um nome para buscar.</td></tr>";
+        return;
+      }
+
       try {
-        const nome = document.getElementById('nome-input').value.toLowerCase();
         const response = await fetch('https://pool-api-alpha.vercel.app/api/v1/pool/');
         const dados = await response.json();
         const lista = document.getElementById('dados-lista');
@@ -185,13 +221,13 @@
         if (filteredData.length > 0) {
           filteredData.forEach(poolData => {
             html += "<tr>";
-            html += "<td>" + poolData.pool_id + "</td>";
-            html += "<td>" + poolData.nome + "</td>";
-            html += "<td>" + poolData.algicida + "</td>";
-            html += "<td>" + poolData.barrilha + "</td>";
-            html += "<td>" + poolData.clarificante + "</td>";
-            html += "<td>" + poolData.cloro + "</td>";
-            html += "<td>" + formatDate(poolData.date) + "</td>";
+            html += `<td data-label="#id">${poolData.pool_id}</td>`;
+            html += `<td data-label="nome">${poolData.nome}</td>`;
+            html += `<td data-label="algicida">${poolData.algicida}</td>`;
+            html += `<td data-label="barrilha">${poolData.barrilha}</td>`;
+            html += `<td data-label="clarificante">${poolData.clarificante}</td>`;
+            html += `<td data-label="cloro">${poolData.cloro}</td>`;
+            html += `<td data-label="data">${formatDate(poolData.date)}</td>`;
             html += "</tr>";
           });
         } else {
@@ -205,8 +241,9 @@
       }
     }
   </script>
- 
+
 </body>
 </html>
+
 
 
