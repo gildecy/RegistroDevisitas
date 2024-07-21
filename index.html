@@ -1,14 +1,52 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  
+
     </head>
-    <title>Document</title>
+    <title>Registro de visitas</title>
     <style>
-        
+          body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #333;
+            margin: 20px 0;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 80%;
+            height: 4px;
+            background-color: #7adbec; /* Linha decorativa */
+            transform: translateX(-50%);
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #7adbec; /* Pontos decorativos */
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
       table {
         font-family: sans-serif;
         border-collapse: collapse;
@@ -75,6 +113,7 @@
         button:focus {
             outline: none;
         }
+       
         
     </style>
 
@@ -142,3 +181,4 @@
  
 </body>
 </html>
+
